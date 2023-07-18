@@ -81,6 +81,11 @@ class Program
                 transaction.Category = categorizeTransaction(transaction.Description);
             }
 
+
+            //order the collection by date
+
+            transactions = transactions.OrderBy(t => t.TransactionDate).ToList();
+
             // Save the categorized data to a new  CSV file
             var newFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"categorized_{Path.GetFileName(filePath)}");
             using (var writer = new StreamWriter(newFilePath))
