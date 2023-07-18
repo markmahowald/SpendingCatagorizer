@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace SpendingCatagorizer
 {
-    internal class Transaction
+    public class Transaction
     {
 
-        public DateTime TransactionDate { get; set; }
-        public string Description {get;set;}
-        public string Source { get; set; }
-        public float Ammount { get; set; }
+        public DateTime? TransactionDate { get; set; }
+        public string? Description {get;set;}
+        public string? Source { get; set; }
+        public float? Ammount { get; set; }
 
-        public string Category { get; set; }
+        public string? Category { get; set; }
         public Transaction(DateTime transactionDate, string description, string source, float ammount, string category = "")
         {
             TransactionDate = transactionDate;
@@ -28,4 +28,5 @@ namespace SpendingCatagorizer
 
         }
     }
+
 }
