@@ -11,7 +11,8 @@ namespace SpendingCatagorizer
     {
         public TransactionMap()
         {
-            Map(m => m.TransactionDate).Name("TransactionDate").TypeConverterOption.Format("MM/dd/yyyy"); Map(m => m.Description);
+            Map(m => m.TransactionDate).Name("TransactionDate").TypeConverterOption.Format("MM/dd/yyyy"); 
+            Map(m => m.Description);
             Map(m => m.Source);
             Map(m => m.Ammount);
             Map(m => m.Category);
