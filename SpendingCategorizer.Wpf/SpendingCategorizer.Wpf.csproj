@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SpendingCatagorizer\SpendingCatagorizer.csproj" />
+    <ProjectReference Include="..\SpendingCategorizer.Core\SpendingCategorizer.Core.csproj" />
+    <ProjectReference Include="..\SpendingCategorizer.Data\SpendingCategorizer.Data.csproj" />
+  </ItemGroup>
+
+</Project>

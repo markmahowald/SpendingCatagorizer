@@ -1,0 +1,85 @@
+﻿<Window x:Class="SpendingCategorizer.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SpendingCategorizer.Wpf"
+        mc:Ignorable="d"
+        Title="Spending Categorizer" Height="450" Width="800"
+        Background="#FFE6B0B0">
+    <!-- Soft pastel pink background -->
+
+    <Grid>
+        <StackPanel Orientation="Vertical" Margin="10">
+
+            <!-- Button Panel -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Button Content="Open and Categorize CSV" 
+                        Command="{Binding OpenCsvCommand}" 
+                        Margin="5" Width="200"
+                        Background="#FFD48B9B" Foreground="White" FontWeight="Bold"
+                        BorderBrush="#FFB0657C" BorderThickness="2"/>
+                <Button Content="Remove CC Payments"
+                        Command="{Binding OpenRemoveSuspectedCCPayments}" 
+                        Margin="5" Width="200"
+                        Background="#FFD48B9B" 
+                        Foreground="White" 
+                        FontWeight="Bold"
+                        BorderBrush="#FFB0657C"
+                        BorderThickness="2"
+                        />
+
+
+                <Button Content="Save CSV" 
+                        Command="{Binding SaveCsvCommand}" 
+                        Margin="5" Width="100"
+                        Background="#FFD48B9B" Foreground="White" FontWeight="Bold"
+                        BorderBrush="#FFB0657C" BorderThickness="2"/>
+            </StackPanel>
+
+                
+            <DataGrid ItemsSource="{Binding Transactions}" 
+                      AutoGenerateColumns="True"
+                      Margin="5" 
+                      IsReadOnly="False"
+                      MaxColumnWidth="250"
+                      CanUserSortColumns="True"  
+                      CanUserReorderColumns="True"
+                      CanUserResizeColumns="True"
+                      IsSynchronizedWithCurrentItem="True"
+                      SelectionMode="Extended"
+                      ScrollViewer.CanContentScroll="True"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                      EnableRowVirtualization="True"
+                      EnableColumnVirtualization="True"
+
+                      AlternatingRowBackground="#FFF5C6D6" 
+                      RowBackground="White"
+                      GridLinesVisibility="None"
+                      BorderBrush="#FFB0657C" BorderThickness="1"
+                      Foreground="#FF572D4A"
+                      FontSize="14"
+                      MaxHeight="700">
+
+                <DataGrid.Columns>
+                    <!-- Freezing the TransactionDate column -->
+                    <DataGridTextColumn Header="Transaction Date" 
+                            Binding="{Binding TransactionDate}" 
+                            SortDirection="Ascending"
+                            CanUserSort="True"
+                            CanUserResize="True"
+                            Width="Auto"
+                            IsReadOnly="True"/>
+                    <!-- Keeps the first column frozen -->
+
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
+                    <DataGridTextColumn Header="Source" Binding="{Binding Source}" />
+                    <DataGridTextColumn Header="Amount" Binding="{Binding Ammount}" />
+                    <DataGridTextColumn Header="Category" Binding="{Binding Category}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+
+    </Grid>
+</Window>

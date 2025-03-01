@@ -1,0 +1,23 @@
+﻿<Window x:Class="SpendingCategorizer.Wpf.Views.ReviewSuspectedCCPaymentsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SpendingCategorizer.Wpf.Views"
+        mc:Ignorable="d"
+        Title="ReviewSuspectedCCPaymentsWindow" Height="450" Width="800">
+        <Grid Background="#FFE6B0B0">
+            <!-- Soft pink background -->
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                <TextBlock Text="{Binding WindowLabel}" FontSize="16" FontWeight="Bold" Foreground="#FF572D4A" TextAlignment="Center" />
+
+                <TextBlock Text="{Binding CurrentTransaction.Description}" FontSize="14" FontWeight="SemiBold" Margin="5" TextAlignment="Center"/>
+                <TextBlock Text="{Binding CurrentTransaction.Ammount, StringFormat=C}" FontSize="14" Foreground="#FF572D4A" Margin="5" TextAlignment="Center"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Content="Remove" Width="100" Margin="5" Background="#FFD48B9B" Foreground="White" Command="{Binding RemoveCommand}"/>
+                    <Button Content="Skip" Width="100" Margin="5" Background="#FFB0657C" Foreground="White" Command="{Binding SkipCommand}"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+</Window>
