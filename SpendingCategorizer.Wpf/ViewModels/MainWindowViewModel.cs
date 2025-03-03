@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Security.Cryptography;
 using System.Windows.Input;
 using Microsoft.Win32;
 using SpendingCategorizer.Core;
@@ -19,6 +20,9 @@ namespace SpendingCategorizer.Wpf
         // Commands for buttons
         public ICommand OpenCsvCommand { get; }
         public ICommand SaveCsvCommand { get; }
+        public ICommand ClearCommand { get; }
+        public ICommand OpenChaseCsvCommand { get; }
+        public ICommand OpenCCUCommand { get; }
         public ICommand OpenRemoveSuspectedCCPayments { get; }
 
         public MainWindowViewModel()
@@ -28,7 +32,12 @@ namespace SpendingCategorizer.Wpf
             // Set up commands using a RelayCommand
             OpenCsvCommand = new RelayCommand(OpenCsv);
             SaveCsvCommand = new RelayCommand(SaveCsv);
+            ClearCommand = new RelayCommand(Clear);
+
             OpenRemoveSuspectedCCPayments = new RelayCommand(OpenRemoveCCWindow);
+            OpenCCUCommand = new RelayCommand(OpenCCUCsv);
+            OpenChaseCsvCommand = new RelayCommand(OpenChaseCsv);
+
         }
 
         private void OpenRemoveCCWindow()
@@ -60,8 +69,57 @@ namespace SpendingCategorizer.Wpf
                 }
             }
         }
+        public void OpenCCUCsv()
+        {
+            var ofd = new OpenFileDialog
+            {
+                Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*"
+            };
 
-        private void SaveCsv()
+            if (ofd.ShowDialog() == true)
+            {
+                var txList = _csvService.ReadCcuCsv(ofd.FileName);
+
+                // Automatically categorize after loading
+                TransactionCategorizer.Categorize(txList);
+
+                // Update the ObservableCollection for the UI
+                //Transactions.Clear();
+                foreach (var t in txList)
+                {
+                    Transactions.Add(t);
+                }
+            }
+        }
+        public void OpenChaseCsv()
+        {
+            var ofd = new OpenFileDialog
+            {
+                Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*"
+            };
+
+            if (ofd.ShowDialog() == true)
+            {
+                var txList = _csvService.ReadChaseCsv(ofd.FileName);
+
+                // Automatically categorize after loading
+                TransactionCategorizer.Categorize(txList);
+
+                // Update the ObservableCollection for the UI
+                //Transactions.Clear();
+                foreach (var t in txList)
+                {
+                    Transactions.Add(t);
+                }
+            }
+        }
+
+        public void Clear()
+        {
+            this.Transactions.Clear();
+        }
+
+        public void SaveCsv()
         {
             var sfd = new SaveFileDialog
             {

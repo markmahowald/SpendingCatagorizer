@@ -14,12 +14,33 @@
 
             <!-- Button Panel -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <Button Content="Open and Categorize CSV" 
+                <!--<Button Content="Open and Categorize CSV" 
                         Command="{Binding OpenCsvCommand}" 
                         Margin="5" Width="200"
                         Background="#FFD48B9B" Foreground="White" FontWeight="Bold"
-                        BorderBrush="#FFB0657C" BorderThickness="2"/>
-                <Button Content="Remove CC Payments"
+                        BorderBrush="#FFB0657C" BorderThickness="2"/>-->
+                <Button Content="Chase-Add and Categorize"
+                        x:Name="ImportChaseButton"
+                        Command="{Binding OpenChaseCsvCommand}"
+                        Margin="5" Width="200"
+                        Background="#FFD48B9B" Foreground="White" FontWeight="Bold"
+                        BorderBrush="#FFB0657C" BorderThickness="2"
+                        />
+                <Button Content="CCU-Add and Categorize"
+                        x:Name="ImportCCUButton"
+                        Command="{Binding OpenCCUCommand}"
+                        Margin="5" Width="200"
+                        Background="#FFD48B9B" Foreground="White" FontWeight="Bold"
+                        BorderBrush="#FFB0657C" BorderThickness="2"
+                        />
+                <Button Content="Clear"
+                        x:Name="ClearButton"
+                        Command="{Binding ClearCommand}"
+                        Margin="5" Width="200"
+                        Background="#FFD48B9B" Foreground="White" FontWeight="Bold"
+                        BorderBrush="#FFB0657C" BorderThickness="2"
+                        />
+                <!--<Button Content="Remove CC Payments"
                         Command="{Binding OpenRemoveSuspectedCCPayments}" 
                         Margin="5" Width="200"
                         Background="#FFD48B9B" 
@@ -27,7 +48,7 @@
                         FontWeight="Bold"
                         BorderBrush="#FFB0657C"
                         BorderThickness="2"
-                        />
+                        />-->
 
 
                 <Button Content="Save CSV" 
