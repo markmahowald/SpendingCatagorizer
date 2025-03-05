@@ -40,6 +40,12 @@
                         Background="#FFD48B9B" Foreground="White" FontWeight="Bold"
                         BorderBrush="#FFB0657C" BorderThickness="2"
                         />
+                <Button Content="Manage Categories" 
+                        Command="{Binding OpenManageCategoriesWindowCommand}"
+                                                Margin="5" Width="200"
+                        Background="#FFD48B9B" Foreground="White" FontWeight="Bold"
+                        BorderBrush="#FFB0657C" BorderThickness="2"
+                        />
                 <!--<Button Content="Remove CC Payments"
                         Command="{Binding OpenRemoveSuspectedCCPayments}" 
                         Margin="5" Width="200"

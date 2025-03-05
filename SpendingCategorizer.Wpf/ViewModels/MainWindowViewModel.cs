@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Security.Cryptography;
+using System.Windows;
 using System.Windows.Input;
 using Microsoft.Win32;
 using SpendingCategorizer.Core;
@@ -24,6 +25,7 @@ namespace SpendingCategorizer.Wpf
         public ICommand OpenChaseCsvCommand { get; }
         public ICommand OpenCCUCommand { get; }
         public ICommand OpenRemoveSuspectedCCPayments { get; }
+        public ICommand OpenManageCategoriesWindowCommand { get; } 
 
         public MainWindowViewModel()
         {
@@ -37,6 +39,7 @@ namespace SpendingCategorizer.Wpf
             OpenRemoveSuspectedCCPayments = new RelayCommand(OpenRemoveCCWindow);
             OpenCCUCommand = new RelayCommand(OpenCCUCsv);
             OpenChaseCsvCommand = new RelayCommand(OpenChaseCsv);
+            OpenManageCategoriesWindowCommand = new RelayCommand(OpenManageCategoriesWindow);
 
         }
 
@@ -49,6 +52,9 @@ namespace SpendingCategorizer.Wpf
 
         private void OpenCsv()
         {
+            try
+            {
+
             var ofd = new OpenFileDialog
             {
                 Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*"
@@ -68,32 +74,53 @@ namespace SpendingCategorizer.Wpf
                     Transactions.Add(t);
                 }
             }
+
+            }
+            catch (Exception e)
+            {
+
+                MessageBox.Show($"Failed to open csv: {e.Message}");
+            }
+            finally
+            {
+
+            }
         }
         public void OpenCCUCsv()
         {
-            var ofd = new OpenFileDialog
+            try
             {
-                Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*"
-            };
-
-            if (ofd.ShowDialog() == true)
-            {
-                var txList = _csvService.ReadCcuCsv(ofd.FileName);
-
-                // Automatically categorize after loading
-                TransactionCategorizer.Categorize(txList);
-
-                // Update the ObservableCollection for the UI
-                //Transactions.Clear();
-                foreach (var t in txList)
+                var ofd = new OpenFileDialog
                 {
-                    Transactions.Add(t);
+                    Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*"
+                };
+
+                if (ofd.ShowDialog() == true)
+                {
+                    var txList = _csvService.ReadCcuCsv(ofd.FileName);
+
+                    // Automatically categorize after loading
+                    TransactionCategorizer.Categorize(txList);
+
+                    // Update the ObservableCollection for the UI
+                    //Transactions.Clear();
+                    foreach (var t in txList)
+                    {
+                        Transactions.Add(t);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+
+                MessageBox.Show($"Failed to open csv: {e.Message}");
             }
         }
         public void OpenChaseCsv()
         {
-            var ofd = new OpenFileDialog
+            try
+            {
+                var ofd = new OpenFileDialog
             {
                 Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*"
             };
@@ -113,6 +140,16 @@ namespace SpendingCategorizer.Wpf
                 }
             }
         }
+            catch (Exception e)
+            {
+
+                MessageBox.Show($"Failed to open csv: {e.Message}");
+            }
+            finally
+            {
+
+            }
+        }
 
         public void Clear()
         {
@@ -121,7 +158,9 @@ namespace SpendingCategorizer.Wpf
 
         public void SaveCsv()
         {
-            var sfd = new SaveFileDialog
+            try
+            {
+                var sfd = new SaveFileDialog
             {
                 Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*"
             };
@@ -130,6 +169,23 @@ namespace SpendingCategorizer.Wpf
             {
                 _csvService.WriteTransactions(sfd.FileName, Transactions);
             }
+
         }
+            catch (Exception e)
+            {
+
+                MessageBox.Show($"Failed to open csv: {e.Message}");
+            }
+            finally
+            {
+            }
+
+        }
+        public void OpenManageCategoriesWindow()
+        {
+            var manageCategoriesWindow = new ManageCategoriesWindow(App.CategoryLibrary);
+            manageCategoriesWindow.ShowDialog();
+        }
+
     }
 }
