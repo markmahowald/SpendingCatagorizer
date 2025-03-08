@@ -25,11 +25,17 @@ namespace SpendingCategorizer.Wpf
         public ICommand OpenChaseCsvCommand { get; }
         public ICommand OpenCCUCommand { get; }
         public ICommand OpenRemoveSuspectedCCPayments { get; }
-        public ICommand OpenManageCategoriesWindowCommand { get; } 
+        public ICommand OpenManageCategoriesWindowCommand { get; }
+         
+
+        public ObservableCollection<string> Categories { get; set; }
 
         public MainWindowViewModel()
         {
             _csvService = new TransactionCsvService();
+
+            Categories = new ObservableCollection<string>();
+            RefreshCategoryList();
 
             // Set up commands using a RelayCommand
             OpenCsvCommand = new RelayCommand(OpenCsv);
@@ -41,6 +47,23 @@ namespace SpendingCategorizer.Wpf
             OpenChaseCsvCommand = new RelayCommand(OpenChaseCsv);
             OpenManageCategoriesWindowCommand = new RelayCommand(OpenManageCategoriesWindow);
 
+        }
+
+     
+        public void RefreshCategoryList()
+        {
+            var cats = TransactionCategorizer.GetAllCategories();
+            foreach (var item in Categories)
+            {
+                if (!cats.Contains(item))
+                {
+                    Categories.Remove(item);
+                }
+            }
+            foreach (string category in cats)
+            {
+                Categories.Add(category);
+            }
         }
 
         private void OpenRemoveCCWindow()
@@ -183,8 +206,13 @@ namespace SpendingCategorizer.Wpf
         }
         public void OpenManageCategoriesWindow()
         {
-            var manageCategoriesWindow = new ManageCategoriesWindow(App.CategoryLibrary);
+            var manageCategoriesWindow = new ManageCategoriesWindow(App.CategoryLibrary, this);
             manageCategoriesWindow.ShowDialog();
+        }
+        public void OpenAddToCategoryWindow(string s)
+        {
+            var addToCatWindow = new CategoryEditor(this.Categories,s, this);
+            addToCatWindow.ShowDialog();
         }
 
     }

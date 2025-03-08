@@ -21,5 +21,14 @@ namespace SpendingCategorizer.Wpf
             InitializeComponent();
             DataContext = new MainWindowViewModel();    
         }
+
+        private void AddToCategoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button)
+            {
+                var transaction = (SpendingCategorizer.Core.Models.Transaction)((FrameworkElement)button).DataContext;
+                ((MainWindowViewModel)this.DataContext).OpenAddToCategoryWindow(transaction.Description) ;
+            }
+        }
     }
 }

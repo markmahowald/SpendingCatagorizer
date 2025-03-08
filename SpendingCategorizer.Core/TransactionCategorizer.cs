@@ -9,13 +9,20 @@ namespace SpendingCategorizer.Core
         // Example category dictionary (fill in your own keywords)
         // Key: Category Name
         // Value: Array of keywords
-       private static TransactionCatagoryLibrary catagoryLibrary = new TransactionCatagoryLibrary();
-
+        private static TransactionCatagoryLibrary catagoryLibrary = new TransactionCatagoryLibrary();
+        public static List<string> GetAllCategories()
+        {
+            return catagoryLibrary.Categories.Select(x => x.Key).ToList();
+        }
         // Public method to categorize an entire list of transactions in place
         public static void Categorize(IEnumerable<Transaction> transactions)
         {
             foreach (var transaction in transactions)
             {
+                if (transaction.Description.ToLower().Contains("zel")) 
+                {
+                    Console.WriteLine( "got here. ");
+                }
                 transaction.Category = DetermineCategory(transaction.Description);
             }
         }

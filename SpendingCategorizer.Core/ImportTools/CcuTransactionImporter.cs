@@ -60,6 +60,7 @@ namespace SpendingCategorizer.Core.ImportTools
             t.Description = x.Description+x.CheckNumber;
             t.Ammount =(x.CreditOrDebit == "Credit"? (x.Amount *-1):  (x.Amount));
             t.Category = "";
+            t.Source = "CCU";
             return t;
 
         }

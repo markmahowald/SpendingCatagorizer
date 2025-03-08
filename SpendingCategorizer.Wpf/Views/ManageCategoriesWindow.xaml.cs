@@ -21,11 +21,13 @@ namespace SpendingCategorizer.Wpf.Views
     public partial class ManageCategoriesWindow : Window
     {
         private TransactionCatagoryLibrary _categoryLibrary;
+        private MainWindowViewModel _mainWindowViewModel;
 
-        public ManageCategoriesWindow(TransactionCatagoryLibrary categoryLibrary)
+        public ManageCategoriesWindow(TransactionCatagoryLibrary categoryLibrary, MainWindowViewModel mainviewmodel)
         {
             InitializeComponent();
             _categoryLibrary = categoryLibrary;
+            this._mainWindowViewModel = mainviewmodel;
         }
 
         private void AddCategory_Click(object sender, RoutedEventArgs e)
@@ -35,6 +37,8 @@ namespace SpendingCategorizer.Wpf.Views
             {
                 _categoryLibrary.AddCategory(category, new string[] { });
                 _categoryLibrary.SaveCategoriesToJson();
+                this._mainWindowViewModel.RefreshCategoryList();
+                
                 MessageBox.Show($"Category '{category}' added!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else

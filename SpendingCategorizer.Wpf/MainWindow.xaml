@@ -63,31 +63,28 @@
                         Background="#FFD48B9B" Foreground="White" FontWeight="Bold"
                         BorderBrush="#FFB0657C" BorderThickness="2"/>
             </StackPanel>
-
-                
             <DataGrid ItemsSource="{Binding Transactions}" 
-                      AutoGenerateColumns="True"
-                      Margin="5" 
-                      IsReadOnly="False"
-                      MaxColumnWidth="250"
-                      CanUserSortColumns="True"  
-                      CanUserReorderColumns="True"
-                      CanUserResizeColumns="True"
-                      IsSynchronizedWithCurrentItem="True"
-                      SelectionMode="Extended"
-                      ScrollViewer.CanContentScroll="True"
-                      ScrollViewer.VerticalScrollBarVisibility="Visible"
-                      ScrollViewer.HorizontalScrollBarVisibility="Visible"
-                      EnableRowVirtualization="True"
-                      EnableColumnVirtualization="True"
-
-                      AlternatingRowBackground="#FFF5C6D6" 
-                      RowBackground="White"
-                      GridLinesVisibility="None"
-                      BorderBrush="#FFB0657C" BorderThickness="1"
-                      Foreground="#FF572D4A"
-                      FontSize="14"
-                      MaxHeight="700">
+          AutoGenerateColumns="False"
+          Margin="5" 
+          IsReadOnly="False"
+          MaxColumnWidth="250"
+          CanUserSortColumns="True"  
+          CanUserReorderColumns="True"
+          CanUserResizeColumns="True"
+          IsSynchronizedWithCurrentItem="True"
+          SelectionMode="Extended"
+          ScrollViewer.CanContentScroll="True"
+          ScrollViewer.VerticalScrollBarVisibility="Visible"
+          ScrollViewer.HorizontalScrollBarVisibility="Visible"
+          EnableRowVirtualization="True"
+          EnableColumnVirtualization="True"
+          AlternatingRowBackground="#FFF5C6D6" 
+          RowBackground="White"
+          GridLinesVisibility="None"
+          BorderBrush="#FFB0657C" BorderThickness="1"
+          Foreground="#FF572D4A"
+          FontSize="14"
+          MaxHeight="700">
 
                 <DataGrid.Columns>
                     <!-- Freezing the TransactionDate column -->
@@ -103,7 +100,35 @@
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
                     <DataGridTextColumn Header="Source" Binding="{Binding Source}" />
                     <DataGridTextColumn Header="Amount" Binding="{Binding Ammount}" />
-                    <DataGridTextColumn Header="Category" Binding="{Binding Category}" />
+
+                    <!-- Category Column as a ComboBox -->
+                    <DataGridTemplateColumn Header="Category">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Category}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <ComboBox ItemsSource="{Binding DataContext.Categories, RelativeSource={RelativeSource AncestorType=Window}}"
+                              Text="{Binding Category, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                              IsEditable="True"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                    
+                    <DataGridTemplateColumn Header="Add To Category">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Add to Category" 
+                                        Click="AddToCategoryButton_Click"
+                                        
+                                        />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
